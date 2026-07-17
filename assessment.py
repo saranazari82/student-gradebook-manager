@@ -20,3 +20,23 @@ class Assessment :
     def display_info(self) :
         print(f"Assessment Title: {self.title}")
         print(f"Maximum Score: {self.max_score}")
+
+
+
+
+
+class Quiz(Assessment) :
+    def grade_message(self, score):
+        percentage = self.calculate_percentage(score)
+        if percentage >= 90 :
+            return "Great quiz result!"
+        if percentage >= 70 : 
+            return "Good quiz performance"
+        if percentage >= 50 :
+            return "You passed, but review this topic"
+        else :
+            return "You need to practice this topic more"
+
+    def display_info(self) :
+            print(f"Quiz assessment: {self.title}")
+            print(f"Quiz Maximum Score: {self.max_score}")
