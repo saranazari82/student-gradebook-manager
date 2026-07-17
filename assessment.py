@@ -56,4 +56,26 @@ class Exam(Assessment) :
     def display_info(self):
         print(f"Exam: {self.title}")
         print(f"Exam Maximum Score: {self.max_score}")
+
+
+
+
+
+class Project(Assessment) :
+    def grade_message(self, score) :
+        percentage = self.calculate_percentage(score)
+        if percentage >= 85 :
+            return f"Your score is {percentage}% - Excellent project!"
+        if percentage >= 50 : 
+            return f"Your score is {percentage}% - Project submitted"
+        else :
+            return f"Your score is {percentage}% - Project needs improvement"
+        
+    def display_info(self):
+        print(f"Project: {self.title}")
+        print(f"Project Maximum Score: {self.max_score}")
+
+
+
+     
      
