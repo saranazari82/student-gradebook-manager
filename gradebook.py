@@ -69,3 +69,19 @@ class Gradebook :
                     result = self.get_result(average)
                     print(f"Average: {average}%")
                     print(f"Result: {result}")
+
+    def search_student(self,keyword) :
+        for student in self.students.values() :
+            if keyword == student.get_id or keyword in student.get_name() :
+                return student
+            return None
+    
+    def delete_student(self,student_id):
+        if student_id in self.students :
+            del self.students[student_id]
+            for course in self.courses.values() :
+                if student_id in course.students :  
+                    course.students.remove(student_id)  
+
+
+
