@@ -42,4 +42,30 @@ class Gradebook :
                 assessment = course.find_assessment(title)
                 percentage = assessment.calculate_percentage(score)
                 percentages.append(percentage)
-            return sum(percentages) / len(percentages)   
+            return sum(percentages) / len(percentages)
+
+    def get_result(self,average) :
+        if average >= self.passing_grade :
+            return "Passed"
+        else :
+            return "Failed"
+
+    def show_report(self,student_id) :
+        if student_id in self.students :
+            student = self.students[student_id]
+            print(f"===== Student Report =====")
+            print(f"Student ID: {student.get_id}")
+            print(f"Name: {student.get_name()}")
+            print(f"Email: {student.email}")
+            if student_id in self.grades :
+                for course_code in self.grades[student_id] :
+                    course = self.courses[course_code]
+                    print(f"Course: {course_code} - {course.course_name}")
+                    for title,score in self.grades[student_id][course_code].items() :
+                        assessment = course.find_assessment(title)
+                        percentage = assessment.calculate_percentage(score)
+                        print(f"{title}: {score} / {assessment.max_score} = {percentage}%")
+                    average = self.calculate_average(student_id,course_code)
+                    result = self.get_result(average)
+                    print(f"Average: {average}%")
+                    print(f"Result: {result}")
