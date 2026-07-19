@@ -27,22 +27,22 @@ class Gradebook :
             course.add_assessment(assessment)
 
     def record_grade(self,student_id,course_code,assessment_title,score) :
-        if student_id in self.students and course_code in self.courses :
-            course = self.courses[course_code]
-            assessment = course.find_assessment(assessment_title)
-            if assessment is None :
-                print(f"Assessment '{assessment_title}' not found.")
-                return
-            if score < 0 or score > assessment.max_score :
-                print(f"Invalid score! Must be between 0 and {assessment.max_score}.")
-                return
-            if student_id not in self.grades :
-                self.grades[student_id] = {}
-            if course_code not in self.grades[student_id] :
-                self.grades[student_id][course_code] = {}
-            self.grades[student_id][course_code][assessment_title] = score
-        else :
+        if student_id not in self.students or course_code not in self.courses :
             print("Student or Course not found.")
+            return
+        course = self.courses[course_code]
+        assessment = course.find_assessment(assessment_title)
+        if assessment is None :
+            print("Assessment not found.")
+            return
+        if score < 0 or score > assessment.max_score :
+            print(f"Invalid score! Must be between 0 and {assessment.max_score}.")
+            return
+        if student_id not in self.grades :
+            self.grades[student_id] = {}
+        if course_code not in self.grades[student_id] :
+            self.grades[student_id][course_code] = {}
+        self.grades[student_id][course_code][assessment_title] = score
 
     def calculate_average(self,student_id,course_code) :
         if student_id in self.grades and course_code in self.grades[student_id] :
