@@ -49,6 +49,18 @@ class Gradebook :
             return "Passed"
         else :
             return "Failed"
+    
+    def get_letter_grade(self,average) :
+        if average >= 90 :
+            return "A"
+        elif average >= 80 :
+            return "B"
+        elif average >= 70 :
+            return "C"
+        elif average >= 60 :
+            return "D"
+        else :
+            return "F"  
 
     def show_report(self,student_id) :
         if student_id in self.students :
@@ -67,9 +79,15 @@ class Gradebook :
                         print(f"{title}: {score} / {assessment.max_score} = {percentage}%")
                     average = self.calculate_average(student_id,course_code)
                     result = self.get_result(average)
+                    letter_grade = self.get_letter_grade(average)
                     print(f"Average: {average}%")
                     print(f"Result: {result}")
-
+                    print(f"Letter Grade: {letter_grade}")
+    def show_dashboard(self) :
+        print("=====Dashboard=====")
+        print(f"Total Students: {len(self.students)}")
+        print(f"Total Courses: {len(self.courses)}")
+        
     def search_student(self,keyword) :
         for student in self.students.values() :
             if keyword == student.get_id or keyword in student.get_name() :
@@ -81,7 +99,6 @@ class Gradebook :
             del self.students[student_id]
             for course in self.courses.values() :
                 if student_id in course.students :  
-                    course.students.remove(student_id)  
+                    course.students.remove(student_id) 
 
-
-
+    
