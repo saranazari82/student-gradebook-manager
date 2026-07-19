@@ -51,27 +51,41 @@ while not exit :
     elif choice == "5" :
         course_code = input("Enter Course Code : ")
         assessment_type = input("Enter Assessment Type (Quiz/Exam/Project): ").lower()
-        title = input("Enter Assessment Title: ")
-        max_score = int(input("Enter Max Score: "))
-        if assessment_type == "quiz" :
-            new_assessment = Quiz(title,max_score)
-        elif assessment_type == "exam" :
-            new_assessment = Exam(title,max_score)
-        elif assessment_type == "project" :
-            new_assessment = Project(title,max_score)
-        gradebook.add_assessment(course_code,new_assessment)
-        print("Assessment added successfully!")
+        if assessment_type not in ["quiz","exam","project"] :
+            print("Invalid assessment type!")
+        else :
+            title = input("Enter Assessment Title: ")
+            max_score_input = input("Enter Max Score: ")
+            if max_score_input.isdigit() :
+                max_score = int(max_score_input)
+                if assessment_type == "quiz" :
+                    new_assessment = Quiz(title,max_score)
+                elif assessment_type == "exam" :
+                    new_assessment = Exam(title,max_score)
+                elif assessment_type == "project" :
+                    new_assessment = Project(title,max_score)
+                gradebook.add_assessment(course_code,new_assessment)
+                print("Assessment added successfully!")
+            else :
+                print("Invalid input! Max Score must be anumber.")
 
     elif choice == "6" :
         student_id = input("Enter Student ID: ")
         course_code = input("Enter Course Code : ")
         title = input("Enter Assessment Title: ")
-        score = int(input("Enter Score: "))
-        gradebook.record_grade(student_id,course_code,title,score)
-        print("Grade recorded successfully!")
-        
+        score_input = input("Enter Score: ")
+        if score_input.isdigit() :
+            score = int(score_input) 
+            gradebook.record_grade(student_id,course_code,title,score)
+            print("Grade recorded successfully!")
+        else :
+            print("Invalid input! Score must be a number.")
+
     elif choice == "7" :
         student_id = input("Enter Student ID: ")
         gradebook.show_report(student_id)
+
+    else :
+        print("Invalid option! Please choose a number between 0 and 7.")
 
     
