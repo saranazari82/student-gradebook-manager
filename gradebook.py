@@ -87,12 +87,15 @@ class Gradebook :
         print("=====Dashboard=====")
         print(f"Total Students: {len(self.students)}")
         print(f"Total Courses: {len(self.courses)}")
-        
-    def search_student(self,keyword) :
-        for student in self.students.values() :
-            if keyword == student.get_id or keyword in student.get_name() :
+
+    def search_student(self, keyword):
+        keyword = keyword.lower()
+        for student in self.students.values():
+            student_id = student.get_id.lower()
+            student_name = student.get_name().lower()
+            if keyword == student_id or keyword in student_name :
                 return student
-            return None
+        return None
     
     def delete_student(self,student_id):
         if student_id in self.students :
