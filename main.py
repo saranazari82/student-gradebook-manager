@@ -13,6 +13,9 @@ def show_menu():
     print("5. Add Assignment")
     print("6. Record Grade")
     print("7. View Student Report")
+    print("8. Search Student")
+    print("9. Delete Student")
+    print("10. Dashboard")
     print("0. Exit")
 
 exit = False
@@ -85,7 +88,28 @@ while not exit :
         student_id = input("Enter Student ID: ")
         gradebook.show_report(student_id)
 
+    elif choice == "8" :
+        keyword = input("Enter keyword for search: ")
+        result = gradebook.search_student(keyword)
+        if result :
+            result.display_info()
+        else :
+            print("Student not found!")
+
+    elif choice == "9" :
+        student_id = input("Enter Student ID: ") 
+        if student_id in gradebook.students :
+            gradebook.delete_student(student_id) 
+            print("Student deleted successfully!")
+        else :
+            print("Student not found!")    
+
+    elif choice == "10" :
+        gradebook.show_dashboard()
+
     else :
-        print("Invalid option! Please choose a number between 0 and 7.")
+        print("Invalid option! Please choose a number between 0 and 10.")
+
+    
 
     
