@@ -14,8 +14,9 @@ def show_menu():
     print("6. Record Grade")
     print("7. View Student Report")
     print("8. Search Student")
-    print("9. Delete Student")
-    print("10. Dashboard")
+    print("9. Update Student Email ")
+    print("10. Delete Student")
+    print("11. Dashboard")
     print("0. Exit")
 
 exit = False
@@ -48,8 +49,11 @@ while not exit :
     elif choice == "4" :
         student_id = input("Enter Student ID: ")
         course_code = input("Enter Course Code : ")
-        gradebook.enroll_student(student_id,course_code)
-        print("Student enrolled successfully!")
+        success = gradebook.enroll_student(student_id,course_code)
+        if success :
+            print("Student enrolled successfully!")
+        else :
+            print("Enrollment failed! Check student id and course code.")
 
     elif choice == "5" :
         course_code = input("Enter Course Code : ")
@@ -67,10 +71,11 @@ while not exit :
                     new_assessment = Exam(title,max_score)
                 elif assessment_type == "project" :
                     new_assessment = Project(title,max_score)
-                gradebook.add_assessment(course_code,new_assessment)
-                print("Assessment added successfully!")
-            else :
-                print("Invalid input! Max Score must be anumber.")
+                success = gradebook.add_assessment(course_code,new_assessment)
+                if success :
+                    print("Assessment added successfully!")
+                else :
+                    print("Failed to add assessment! Course not found.")
 
     elif choice == "6" :
         student_id = input("Enter Student ID: ")
@@ -79,10 +84,11 @@ while not exit :
         score_input = input("Enter Score: ")
         if score_input.isdigit() :
             score = int(score_input) 
-            gradebook.record_grade(student_id,course_code,title,score)
-            print("Grade recorded successfully!")
-        else :
-            print("Invalid input! Score must be a number.")
+            success = gradebook.record_grade(student_id,course_code,title,score)
+            if success :
+                print("Grade recorded successfully!")
+            else :
+                print("Failed to record grade!")
 
     elif choice == "7" :
         student_id = input("Enter Student ID: ")
@@ -97,6 +103,16 @@ while not exit :
             print("Student not found!")
 
     elif choice == "9" :
+        student_id = input("Enter Student ID: ")
+        if student_id in gradebook.students :
+            new_email = input("Enter New Email: ")
+            success = gradebook.students[student_id].set_email(new_email)
+            if success :
+                print("Email updated successfully!")
+        else :
+            print("Student not found!")        
+
+    elif choice == "10" :
         student_id = input("Enter Student ID: ") 
         if student_id in gradebook.students :
             gradebook.delete_student(student_id) 
@@ -104,11 +120,11 @@ while not exit :
         else :
             print("Student not found!")    
 
-    elif choice == "10" :
+    elif choice == "11" :
         gradebook.show_dashboard()
 
     else :
-        print("Invalid option! Please choose a number between 0 and 10.")
+        print("Invalid option! Please choose a number between 0 and 11.")
 
     
 
