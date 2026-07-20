@@ -20,11 +20,17 @@ class Gradebook :
             course = self.courses[course_code]
             student.enroll_course(course_code)
             course.add_student(student_id)
+            return True
+        else :
+            return False
 
     def add_assessment(self,course_code,assessment) :
         if course_code in self.courses :
             course = self.courses[course_code]        
             course.add_assessment(assessment)
+            return True
+        else :
+            return False
 
     def record_grade(self,student_id,course_code,assessment_title,score) :
         if student_id not in self.students or course_code not in self.courses :
@@ -43,6 +49,7 @@ class Gradebook :
         if course_code not in self.grades[student_id] :
             self.grades[student_id][course_code] = {}
         self.grades[student_id][course_code][assessment_title] = score
+        return True
 
     def calculate_average(self,student_id,course_code) :
         if student_id in self.grades and course_code in self.grades[student_id] :
@@ -89,14 +96,17 @@ class Gradebook :
                     print(f"Course: {course_code} - {course.course_name}")
                     for title,score in self.grades[student_id][course_code].items() :
                         assessment = course.find_assessment(title)
-                        percentage = assessment.calculate_percentage(score)
-                        print(f"{title}: {score} / {assessment.max_score} = {percentage}%")
+                        if assessment :
+                            percentage = assessment.calculate_percentage(score)
+                            print(f"{title}: {score} / {assessment.max_score} = {percentage}%")
                     average = self.calculate_average(student_id,course_code)
                     result = self.get_result(average)
                     letter_grade = self.get_letter_grade(average)
                     print(f"Average: {average}%")
                     print(f"Result: {result}")
                     print(f"Letter Grade: {letter_grade}")
+        else :
+            print("Student not found")            
 
     def show_dashboard(self) :
         print("=====Dashboard=====")
