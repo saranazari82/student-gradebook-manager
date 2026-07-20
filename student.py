@@ -2,7 +2,8 @@ class Student :
     def __init__(self,student_id,name,email) :
         self.__student_id = student_id
         self.name = name
-        self.email = email
+        self.email = None
+        self.set_email(email)
         self.courses = []
 
     @property    
@@ -15,8 +16,10 @@ class Student :
     def set_email(self,new_email) :
         if "@" in new_email and "." in new_email  :
             self.email = new_email
+            return True
         else :
             print("invalid email address.")
+            return False
 
     def enroll_course(self,course_code) :
         if course_code not in self.courses :
